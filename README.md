@@ -29,6 +29,8 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 > Answer:
 
+Client side routing allows you to load all of your app content upfront and navigate through different pages of the app without sending a network request. This creates a much more seamless and scalable experience within an app. 
+
 ## Project Set Up
 
 Follow these steps to set up and work on your project:
