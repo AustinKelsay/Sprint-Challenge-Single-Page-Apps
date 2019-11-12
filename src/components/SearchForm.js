@@ -1,46 +1,38 @@
-import React, { useState } from "react";
-import { Formik, withFormik, Form, Field, ErrorMessage, } from 'formik';
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { __values } from "tslib";
 
-export default function SearchForm({values, handleSubmit, handleChange}) {
-  const [form, setForm] = useState([])
+export default function SearchForm(props) {
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    axios
+    .get(`https://rickandmortyapi.com/api/character/`)
+    .then(response => {
+      const characters = response.data.results.filter(character =>
+        character.name.toLowerCase().includes(query.toLowerCase())
+        );
+
+        props.setFilterState(characters)
+  }, [query]);
+})
+
+  
+
+  const handleChange = (event) => {
+    setQuery(event.target.value)
+  };
+
 
   return (
-    <section className="search-form">
-     <Formik
-     //initialValues={{search: ''}}
-     render={props => {
-
-       return(
-              
-       <Form onSubmit={handleSubmit}>
-         <Field name='search' type='text' onChange={handleChange} />
-
-         <button className='submit' type="submit" >Submit</button>
-       </Form>
-       )
-      }}
-     />
-    </section>
-
+    <div className="App">
+      <form>
+        <label>
+          Search:
+          <input type="text" value={query.name} onChange={handleChange} />
+        </label>
+        <button>Submit</button>
+      </form>
+    </div>
   );
-  
 }
-
-const formikUserForm = withFormik({
-  mapPropsToValues({search}){
-      console.log()
-      return {
-        search: search || "",
-      };
-  },
-
-  handleSubmit:(values) => {
-      axios.get('https://rickandmortyapi.com/api/character/')
-        .then(res => {
-            console.log(res);   
-        })
-        .catch(err => console.log(err.respons))
-  }
-})(SearchForm);
