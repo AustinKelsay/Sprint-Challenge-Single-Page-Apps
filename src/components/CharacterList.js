@@ -9,6 +9,7 @@ export default function CharacterList(props) {
   const [data, setData] = useState([])
   const [filterState, setFilterState] = useState([]);
 
+
   useEffect(() => {
     // TODO: Add API Request here - must run in `useEffect`
     //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
@@ -25,10 +26,14 @@ export default function CharacterList(props) {
     });
   }, []);
 
+  const Filter = (input) => {
+    setFilterState(data.filter((character =>  character.name.toLowerCase().includes(input.toLowerCase()))))
+  }
+
 
   return (
     <div className="character-list">
-      <SearchForm setFilterState={setFilterState} />
+      <SearchForm setFilterState={Filter} />
       {filterState.map(data => (
       <Link to={`/characters/${data.id}`}> <img src={data.image}></img> </Link>
       ))}

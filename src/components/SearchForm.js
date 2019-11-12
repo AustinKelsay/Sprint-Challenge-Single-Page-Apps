@@ -5,22 +5,22 @@ import { __values } from "tslib";
 export default function SearchForm(props) {
   const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    axios
-    .get(`https://rickandmortyapi.com/api/character/`)
-    .then(response => {
-      const characters = response.data.results.filter(character =>
-        character.name.toLowerCase().includes(query.toLowerCase())
-        );
+//   useEffect(() => {
+//     axios
+//     .get(`https://rickandmortyapi.com/api/character/`)
+//     .then(response => {
+//       const characters = response.data.results.filter(character =>
+//         character.name.toLowerCase().includes(query.toLowerCase())
+//         );
 
-        props.setFilterState(characters)
-  }, [query]);
-})
+        
+//   }, [query]);
+// })
 
   
-
   const handleChange = (event) => {
     setQuery(event.target.value)
+    props.setFilterState(query)
   };
 
 
@@ -29,7 +29,7 @@ export default function SearchForm(props) {
       <form>
         <label>
           Search:
-          <input type="text" value={query.name} onChange={handleChange} />
+          <input type="text" value={query} onChange={handleChange} />
         </label>
         <button>Submit</button>
       </form>
